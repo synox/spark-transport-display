@@ -27,7 +27,7 @@ Ampel ampel;
 HttpClient* httpClient;
 
 void setup() {
-	Time.zone(+2.0); // DST / Sommerzeit
+	Time.zone(+2.0); // DST / Sommerzeit // TODO: detect DST 
 	Serial.begin(9600);
 	pinMode(led, OUTPUT);
 

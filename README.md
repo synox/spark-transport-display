@@ -1,25 +1,66 @@
 About
 ===
-With a Spark Core and this software you can: Check the current time, the weather forecast and the bus' next departure at a glance. The information is displayed using a colored LED and an OLED display. 
+This software enables you to display the weather, current time and the bus' next departure on a Display. 
 
-The colored LED  shows when it is the right time to leave and catch a bus. (Green=Good to go, Orange=Run!, Red=too late)
+This project is a compilation of different components: 
+ * Weather from http://openweathermap.org/
+ * Swiss Traffic Information from http://transport.opendata.ch/ (running a modified version at http://opentt.herokuapp.com/)
+ * Time (provided by Spark Core firmware)
 
+The required hardware is:
+ *  Spark Core (https://www.spark.io/)
+ *  16x2 OLED Display (http://www.adafruit.com/products/823)
+ *  Some wires
+ 
+The display
+===
 
-**Data**: The data source is http://opentt.herokuapp.com/ (a modified version of http://transport.opendata.ch/). See Repo https://github.com/synox/Transport
+![image](doc/display.png)
 
-**Device**: It is realized with a [Spark Core Firmware](http://spark.io). It calls the transport api over HTTP and parses the result. 
+The colored LED shows when it is the right time to leave and catch a bus. (Green=Good to go, Orange=Run!, Red=too late)
 
+The display shows the time, weather, temperature and next bus departures. The position are configurable in the code. 
+
+## Circuit Diagram
+TODO (a real Circuit Diagram is still to be done)
+
+see image: 
+![image](doc/wires.jpg)
 
 ## Example Usage
-TODO
-## Recommended Components
-TODO
-## Circuit Diagram
-TODO
+see [spark-transport-display.cpp](firmware/spark-transport-display.cpp)
+
+You have to change some location and API-Key information: 
+
+Setup the display acording the your wiring: 
+
+	lcd = new Adafruit_CharacterOLED(OLED_V1, D0, D1, D2, D3, D4, D5, D6);
+
+Set your location (e.g. London,uk) and replace your api key from http://openweathermap.org
+
+    weather = new Weather("Bern,ch", httpClient, "YOUR_OPENWEATHER_API_KEY");
+
+Set your station and adjust the URL (from, to): 
+
+	ampel.init(lcd, ">Bern",
+			"/v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6",
+			httpClient);
+
+
+
+## Build and deploy
+You must install [spark-cli](https://github.com/spark/spark-cli) and change the device id in ``firmware/Makefile``. 
+
+
+	cd firmware
+	make all
+
+This will build and deploy the source in the spark cloud. 
+
 
 Additional Resources
 ----------------
-* Thanks: The project was inspired by Bastian Widmer (bastianwidmer.ch) and Christian Leu (leumund.ch)
+* This project was inspired by Bastian Widmer (bastianwidmer.ch) and Christian Leu (leumund.ch)
 * http://leumund.ch/d-i-y-busstop-lamp-arduino-0011112
 * https://github.com/dasrecht/Arduino-Busstop-Light
 
