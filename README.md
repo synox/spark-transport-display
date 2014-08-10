@@ -57,6 +57,11 @@ You must install [spark-cli](https://github.com/spark/spark-cli).
 
 This will build and deploy the source in the spark cloud. (You must replace the device-id `1234567`. )
 
+## Used libraries
+* [HttpClient](https://github.com/nmattisson/HttpClient) for making http request
+* [ArduinoJson](https://github.com/bblanchon/ArduinoJson) for parsing json response from http://openweathermap.org/
+
+
 
 Additional Resources
 ----------------
