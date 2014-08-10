@@ -49,13 +49,13 @@ Set your station and adjust the URL (from, to):
 
 
 ## Build and deploy
-You must install [spark-cli](https://github.com/spark/spark-cli) and change the device id in ``firmware/Makefile``. 
+You must install [spark-cli](https://github.com/spark/spark-cli). 
 
 
 	cd firmware
-	make all
+	spark  cloud flash 1234567 .
 
-This will build and deploy the source in the spark cloud. 
+This will build and deploy the source in the spark cloud. (You must replace the device-id `1234567`. )
 
 
 Additional Resources
