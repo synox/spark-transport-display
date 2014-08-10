@@ -5,7 +5,7 @@ With a Spark Core and this software you can: Check the current time, the weather
 The colored LED  shows when it is the right time to leave and catch a bus. (Green=Good to go, Orange=Run!, Red=too late)
 
 
-**Data**: The data source is http://opentt.herokuapp.com/ (a modified version of http://transport.opendata.ch/) 
+**Data**: The data source is http://opentt.herokuapp.com/ (a modified version of http://transport.opendata.ch/). See Repo https://github.com/synox/Transport
 
 **Device**: It is realized with a [Spark Core Firmware](http://spark.io). It calls the transport api over HTTP and parses the result. 
 
