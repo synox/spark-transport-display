@@ -3,7 +3,8 @@ About
 This software enables you to display the weather, current time and the bus' next departure on a Display. 
 
 This project is a compilation of different components: 
- * Weather from http://openweathermap.org/
+
+ * Weather from http://openweathermap.org/ (see [synox/openweathermap-spark-lib](https://github.com/synox/openweathermap-spark-lib) for more details)
  * Swiss Traffic Information from http://transport.opendata.ch/ (running a modified version at http://opentt.herokuapp.com/)
  * Time (provided by Spark Core firmware)
 
