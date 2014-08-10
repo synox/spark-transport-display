@@ -2,6 +2,6 @@
   "name": "spark-transport-display",
   "author": "Synox <synox on github>",
   "license": "CC0",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A display for time, wheater and transport information"
 }
