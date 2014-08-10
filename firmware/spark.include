@@ -3,8 +3,8 @@ spark-transport-display.cpp
 Adafruit_CharacterOLED.cpp
 Adafruit_CharacterOLED.h
 
-Ampel.cpp
-Ampel.h
+Transport.cpp
+Transport.h
 
 HttpClient.cpp
 HttpClient.h

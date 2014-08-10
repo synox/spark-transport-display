@@ -1,11 +1,11 @@
-#include "Ampel.h"
+#include "Transport.h"
 
 
 
 // ------------- configuration ------------
 
 
-Status Ampel::getStatus(int diffSeconds) {
+Status Transport::getStatus(int diffSeconds) {
 	if (diffSeconds < -60) {
 		// too late
 		return off;
@@ -23,7 +23,7 @@ Status Ampel::getStatus(int diffSeconds) {
 	}
 }
 
-void Ampel::updateLED(Status status) {
+void Transport::updateLED(Status status) {
 	RGB.control(true);
 
 	switch(status) {
@@ -49,7 +49,7 @@ unsigned long connections[CONNECTION_CACHE_SIZE];
 
 
 
-void Ampel::init (Adafruit_CharacterOLED *lcd, const char* connName, const char* query, HttpClient* client) {
+void Transport::init (Adafruit_CharacterOLED *lcd, const char* connName, const char* query, HttpClient* client) {
     this->lcd = lcd;
     // init connection array
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
@@ -63,7 +63,7 @@ void Ampel::init (Adafruit_CharacterOLED *lcd, const char* connName, const char*
 }
 
 
-void Ampel::cleanupCache(unsigned long now) {
+void Transport::cleanupCache(unsigned long now) {
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
 		if(connections[i] == 0) {
 			// empty
@@ -80,7 +80,7 @@ void Ampel::cleanupCache(unsigned long now) {
 }
 
 
-unsigned int Ampel::getCacheSize() {
+unsigned int Transport::getCacheSize() {
 	unsigned int count = 0;
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
 		if(connections[i] != 0) {
@@ -91,7 +91,7 @@ unsigned int Ampel::getCacheSize() {
 }
 
 
-void Ampel::loadConnections(unsigned long now) {
+void Transport::loadConnections(unsigned long now) {
     cleanupCache( now);
 	if (getCacheSize() < 2 )  {
 		if(lcd != NULL) {
@@ -124,12 +124,12 @@ void Ampel::loadConnections(unsigned long now) {
 
 
 
-void Ampel::parseFahrplan(String jsonData) {
+void Transport::parseFahrplan(String jsonData) {
 	int offset = 0;
 	do {
 		offset = jsonData.indexOf("departure\":", offset);
-		if(AMPEL_DEBUG) Serial.print("offset: ");
-		if(AMPEL_DEBUG) Serial.println(offset);
+		if(TRANSPORT_DEBUG) Serial.print("offset: ");
+		if(TRANSPORT_DEBUG) Serial.println(offset);
 
 		if (offset == -1) {
 			break;
@@ -137,8 +137,8 @@ void Ampel::parseFahrplan(String jsonData) {
 		//
 		offset += 11; // move to timestamp
 		String timestamp = jsonData.substring(offset, offset + 10); // timestamp has length 10
-		if(AMPEL_DEBUG) Serial.print("ts: ");
-		if(AMPEL_DEBUG) Serial.println(timestamp);
+		if(TRANSPORT_DEBUG) Serial.print("ts: ");
+		if(TRANSPORT_DEBUG) Serial.println(timestamp);
 		if(timestamp.length() == 0) {
 			continue;
 		}
@@ -151,9 +151,9 @@ void Ampel::parseFahrplan(String jsonData) {
 /**
  * Adds the given timestamp to the connection array. Multiple arrays might be possible.
  */
-void Ampel::addConnection(unsigned long ts) {
-	if(AMPEL_DEBUG) Serial.print("fahrplan ts:");
-	if(AMPEL_DEBUG) Serial.println(ts);
+void Transport::addConnection(unsigned long ts) {
+	if(TRANSPORT_DEBUG) Serial.print("fahrplan ts:");
+	if(TRANSPORT_DEBUG) Serial.println(ts);
 
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
 
@@ -169,7 +169,7 @@ void Ampel::addConnection(unsigned long ts) {
 }
 
 
-void Ampel::printCache() {
+void Transport::printCache() {
 	Serial.println("conn:");
 	Serial.println("-----------");
 
@@ -179,14 +179,14 @@ void Ampel::printCache() {
 	Serial.println("-------");
 }
 
-void Ampel::updateLed(unsigned long now) {
+void Transport::updateLed(unsigned long now) {
     Status status  = calculateStatus(now);
 	updateLED(status);
 }
 
 
 
-Status Ampel::calculateStatus(unsigned long now) {
+Status Transport::calculateStatus(unsigned long now) {
 	// Connections might be overlapping. In case you have every 2 minutes a connection,
 	// you want to see green all the time. the enum Status is ordered by increasing priority.
 	Status bestStatus = off;
@@ -209,7 +209,7 @@ Status Ampel::calculateStatus(unsigned long now) {
 	return bestStatus;
 }
 
-void Ampel::updateDisplay() {
+void Transport::updateDisplay() {
 	unsigned long now = Time.now();
 	int row = 0;
 	// assuming it is a 16 column, 2 row display

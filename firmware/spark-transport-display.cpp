@@ -1,6 +1,6 @@
 
 #include "Adafruit_CharacterOLED.h"
-#include "Ampel.h"
+#include "Transport.h"
 #include "openweathermap.h"
 #include "HttpClient.h"
 
@@ -21,7 +21,7 @@ byte iconRainKey = 1;
 int led = D7;
 unsigned int nextTime = 0;    // next time to contact the server
 
-Ampel ampel;
+Transport transport;
 
  Weather* weather;
 HttpClient* httpClient;
@@ -46,8 +46,8 @@ void setup() {
 
     weather = new Weather("Bern,ch", httpClient, "ae22162b86e9ea6298b8dc79d2330691");
 
-	// setup ampel
-	ampel.init(lcd, ">Bern",
+	// setup transport api
+	transport.init(lcd, ">Bern",
 			"/v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6",
 			httpClient);
 
@@ -126,9 +126,9 @@ void loop() {
 	digitalWrite(led, HIGH);
 
 
-	ampel.loadConnections(Time.now());
-	ampel.updateLed(Time.now());
-	ampel.printCache();
+	transport.loadConnections(Time.now());
+	transport.updateLed(Time.now());
+	transport.printCache();
 
 
 	if (lcd != NULL) {
@@ -139,7 +139,7 @@ void loop() {
 	// +----------------+
 		lcd->clear();
 		displayTime(0, 0);
-		ampel.updateDisplay();
+		transport.updateDisplay();
 
 		// print weather
 
