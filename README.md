@@ -37,6 +37,7 @@ Circuit layout:
 ![image](doc/Schaltplan.png)
 
 In action: 
+
 ![image](doc/wires.jpg)
 
 ## Getting started with the firmware
