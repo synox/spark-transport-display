@@ -49,15 +49,13 @@ unsigned long connections[CONNECTION_CACHE_SIZE];
 
 
 
-void Transport::init (Adafruit_CharacterOLED *lcd, const char* connName, const char* query, HttpClient* client) {
+void Transport::init (Adafruit_CharacterOLED *lcd, const char* query, HttpClient* client) {
     this->lcd = lcd;
     // init connection array
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
 		connections[i] = 0;
 	}
 	this->query = query;
-	this->connName = connName;
-
 	 httpClient = client;
 
 }
@@ -209,20 +207,25 @@ Status Transport::calculateStatus(unsigned long now) {
 	return bestStatus;
 }
 
-void Transport::updateDisplay() {
+
+/** print departure time right aligned. e.g.     23m */
+void Transport::displayDepartures(const int rowLength, const int rowCount) {
 	unsigned long now = Time.now();
 	int row = 0;
-	// assuming it is a 16 column, 2 row display
-	for (int i = 0; i < CONNECTION_CACHE_SIZE && row < 2; i++) {
+
+	for (int i = 0; i < CONNECTION_CACHE_SIZE && row < rowCount; i++) {
 		long diffSecs = connections[i] - now;
-		if(diffSecs < 0 ) {// || diffSecs > 3600 ) {
+		if(diffSecs < 0 ) {
+			// ignore past connections
 			continue;
 		} else if(diffSecs > 3 * 3600 ) {
 			// ignore far future connections
 		} else {
 			String minutes(diffSecs / 60 ); // minutes
 			String time = minutes + "m";
-			lcd->setCursor(16-time.length(),row); //
+
+			// set cursor right aligned
+			lcd->setCursor(rowLength-time.length(),row); //
 
 			// Print duration
 			lcd->print(time);

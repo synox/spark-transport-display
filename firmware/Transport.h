@@ -14,16 +14,15 @@ enum Status {
 
 class Transport {
     public:
-    void init(Adafruit_CharacterOLED *lcd, const char* connName,const char* query, HttpClient* client);
+    void init(Adafruit_CharacterOLED *lcd, const char* query, HttpClient* client);
     void cleanupCache(unsigned long now);
     unsigned int getCacheSize();
     void loadConnections(unsigned long now);
     void printCache();
     void updateLed(unsigned long now);
-    void updateDisplay();
+    void displayDepartures(const int rowLength, const int rowCount);
     
     private: 
-    const char* connName;
     const char* query;
     Adafruit_CharacterOLED *lcd;
 	HttpClient* httpClient;

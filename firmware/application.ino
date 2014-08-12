@@ -4,7 +4,9 @@
 #include "openweathermap.h"
 #include "HttpClient.h"
 
+
 Adafruit_CharacterOLED *lcd = NULL;
+// Assign special symbols
 byte degreeSignArray[8] = { 8,20,8,0,3,4,4,3 };
 byte degreeSignKey = 0;
 byte iconRainArray[7] = {
@@ -18,27 +20,28 @@ byte iconRainArray[7] = {
 };
 byte iconRainKey = 1;
 
-int led = D7;
-unsigned int nextTime = 0;    // next time to contact the server
+int activityLed  = D7;
+unsigned int updateTimeout = 0;    // next time to contact the server
+
 
 Transport transport;
-
- Weather* weather;
+Weather* weather;
 HttpClient* httpClient;
 
 void setup() {
 	Time.zone(+2.0); // DST / Sommerzeit // TODO: detect DST 
 	Serial.begin(9600);
-	pinMode(led, OUTPUT);
+	pinMode(activityLed, OUTPUT);
 
+	// use one httpClient for weather and transportation (save memory)
 	httpClient = new HttpClient();
 
 	// setup led
 	RGB.control(true);
-	RGB.brightness(255);
+	RGB.brightness(100);
 
-	// setup lcd
-	lcd = new Adafruit_CharacterOLED(OLED_V1, D0, D1, D2, D3, D4, D5, D6);
+	// setup lcd                              rs, rw, enable, d4, d5, d6, d7
+	lcd = new Adafruit_CharacterOLED(OLED_V1, D0, D1, D2,     D3, D4, D5, D6);
 	lcd->createChar(degreeSignKey, degreeSignArray);
 	lcd->createChar(iconRainKey, iconRainArray);
 
@@ -47,10 +50,63 @@ void setup() {
     weather = new Weather("Bern,ch", httpClient, "ae22162b86e9ea6298b8dc79d2330691");
 
 	// setup transport api
-	transport.init(lcd, ">Bern",
+	transport.init(lcd, 
 			"/v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6",
 			httpClient);
 
+}
+
+void loop() {
+	if (updateTimeout > millis()) {
+		// keep the same text & color while waiting
+		return;
+	}
+
+	digitalWrite(activityLed, HIGH); // indicate activity
+
+	transport.loadConnections(Time.now());
+	transport.updateLed(Time.now());
+	//transport.printCache();
+
+
+	if (lcd != NULL) {
+	// Display design: (16x2 char)
+	// +----------------+
+	// |14:15 15/22`  5m|
+	// |mod rain     12m|
+	// +----------------+
+		lcd->clear();
+		displayCurrentTime(0, 0);
+		transport.displayDepartures(16, 2); // 16x2 Display
+
+		// print weather in first row after the time
+		lcd->setCursor(0, 1); 
+		lcd->print("loading...");
+		weather_response_t resp = weather->cachedUpdate();
+		if ( resp.isSuccess) {
+			lcd->setCursor(6, 0); 
+			lcd->print(resp.temp_low);
+			lcd->print("/");
+			lcd->print(resp.temp_high);
+			lcd->write(byte(degreeSignKey));
+			// print descr on new line
+			lcd->setCursor(0, 1);
+			int iconCode = getConditionIcon(resp.conditionCode);
+			if(iconCode >= 0) {
+				Serial.print("iconcode: ");
+				Serial.println(byte(iconCode));
+				lcd->write(byte(iconCode));
+			}
+			lcd->print(shortDescr(resp.descr).substring(0,12));
+		}
+
+
+	}
+
+
+	// check again in 5 seconds:
+	updateTimeout = millis() + 5000;
+	digitalWrite(activityLed, LOW);
 }
 
 int getConditionIcon(int conditionCode) {
@@ -102,7 +158,7 @@ String shortDescr(String &descr) {
 	return descr;
 }
 
-void displayTime(int row, int col) {
+void displayCurrentTime(int row, int col) {
 	 int hour = Time.hour();
 	 int min = Time.minute();
     lcd->setCursor(col, row);
@@ -115,57 +171,4 @@ void displayTime(int row, int col) {
     	lcd->print(0);
     }
     lcd->print(min);
-}
-
-void loop() {
-	if (nextTime > millis()) {
-		// keep the same color while waiting
-		return;
-	}
-
-	digitalWrite(led, HIGH);
-
-
-	transport.loadConnections(Time.now());
-	transport.updateLed(Time.now());
-	transport.printCache();
-
-
-	if (lcd != NULL) {
-	// Display design: (16x2 char)
-	// +----------------+
-	// |14:15 5-12` 5min|
-	// |mod rain   12min|
-	// +----------------+
-		lcd->clear();
-		displayTime(0, 0);
-		transport.updateDisplay();
-
-		// print weather
-
-		weather_response_t resp = weather->cachedUpdate();
-		if ( resp.isSuccess) {
-			lcd->setCursor(7, 0);
-			lcd->print(resp.temp_low);
-			lcd->print("/");
-			lcd->print(resp.temp_high);
-			lcd->write(byte(degreeSignKey));
-			// on new line
-			lcd->setCursor(0, 1);
-			int iconCode = getConditionIcon(resp.conditionCode);
-			if(iconCode >= 0) {
-				Serial.print("iconcode: ");
-				Serial.println(byte(iconCode));
-				lcd->write(byte(iconCode));
-			}
-			lcd->print(shortDescr(resp.descr).substring(0,12));
-		}
-
-
-	}
-
-
-	// check again in 5 seconds:
-	nextTime = millis() + 5000;
-	digitalWrite(led, LOW);
 }

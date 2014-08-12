@@ -22,10 +22,25 @@ Weather::Weather(String location, HttpClient* client, String apiKey) {
 
 }
 
-bool Weather::update(weather_response_t& response) {
-	Serial.print("loading weather with url: ");
-	Serial.println(request.path);
 
+/**
+ * Reads from the cache if there is a fresh and valid response.
+ */
+weather_response_t Weather::cachedUpdate() {
+	if (lastsync == 0 || (lastsync + weather_sync_interval) < millis()) {
+		weather_response_t resp;
+		if(this->update(resp)){
+			lastReponse = resp;	
+			lastsync = millis();
+		}
+	} else {
+		Serial.println("using cached weather");
+	}
+	return lastReponse;
+}
+
+
+bool Weather::update(weather_response_t& response) {
 	request.hostname = "api.openweathermap.org";
 	request.port = 80;
 	request.path = "/data/2.5/forecast/daily?q=" //
@@ -89,20 +104,4 @@ bool Weather::parse(String& data, weather_response_t& response) {
 		
 	response.isSuccess = true;
 	return true;
-}
-
-/**
- * Reads from the cache if there is a fresh and valid response.
- */
-weather_response_t Weather::cachedUpdate() {
-	if (lastsync == 0 || (lastsync + weather_sync_interval) < millis()) {
-		weather_response_t resp;
-		if(this->update(resp)){
-			lastReponse = resp;	
-			lastsync = millis();
-		}
-	} else {
-		Serial.println("using cached weather");
-	}
-	return lastReponse;
 }

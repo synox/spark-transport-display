@@ -1,10 +1,13 @@
-spark-transport-display.cpp
-
-lib/Adafruit_CharacterOLED.cpp
-lib/Adafruit_CharacterOLED.h
+application.ino
 
 Transport.cpp
 Transport.h
+
+openweathermap.cpp
+openweathermap.h
+
+lib/Adafruit_CharacterOLED.cpp
+lib/Adafruit_CharacterOLED.h
 
 lib/HttpClient.cpp
 lib/HttpClient.h
@@ -26,5 +29,3 @@ lib/JsonValue.h
 lib/jsmn.cpp
 lib/jsmn.h
 
-openweathermap.cpp
-openweathermap.h

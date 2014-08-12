@@ -23,15 +23,21 @@ The colored LED shows when it is the right time to leave and catch a bus. (Green
 The display shows the time, weather, temperature and next bus departures. The position are configurable in the code. 
 
 ## Circuit Diagram
-TODO (a real Circuit Diagram is still to be done)
+Putting it together is quite simple: 
 
-see image: 
+![image](doc/Steckplatine.png)
+
+circuit layout:
+
+![image](doc/Schaltplan.png)
+
+in action: 
 ![image](doc/wires.jpg)
 
-## Example Usage
-see [spark-transport-display.cpp](firmware/spark-transport-display.cpp)
+## Getting started
+You have to change some settings in [application.ino](firmware/application.ino), in the method ``setup``. 
 
-You have to change some location and API-Key information: 
+First, you have to change some location and API-Key information in the method ``setup``: 
 
 Setup the display acording the your wiring: 
 
@@ -43,7 +49,7 @@ Set your location (e.g. London,uk) and replace your api key from http://openweat
 
 Set your station and adjust the URL (from, to): 
 
-	ampel.init(lcd, ">Bern",
+	transport.init(lcd,
 			"/v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6",
 			httpClient);
 
@@ -58,9 +64,12 @@ You must install [spark-cli](https://github.com/spark/spark-cli).
 
 This will build and deploy the source in the spark cloud. (You must replace the device-id `1234567`. )
 
+You can also configure and use the `Makefile`. 
+
 ## Used libraries
 * [HttpClient](https://github.com/nmattisson/HttpClient) for making http request
 * [ArduinoJson](https://github.com/bblanchon/ArduinoJson) for parsing json response from http://openweathermap.org/
+* [Adafruit_CharacterOLED](https://github.com/ladyada/Adafruit_CharacterOLED) Arduino for the 16x2 Display, I fixed some imports
 
 
 
