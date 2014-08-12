@@ -41,9 +41,7 @@ See also the photos of my wiring [first](doc/wires1.jpg) and [second compact ver
 ## Getting started with the firmware
 You have to change some settings in [application.ino](firmware/application.ino), in the method ``setup``. 
 
-First, you have to change some location and API-Key information in the method ``setup``: 
-
-Setup the display acording the your wiring: 
+Firstly, setup the display acording the your wiring: 
 
 	lcd = new Adafruit_CharacterOLED(OLED_V1, D0, D1, D2, D3, D4, D5, D6);
 
@@ -75,7 +73,9 @@ You can also configure and use the `Makefile`.
 * [ArduinoJson](https://github.com/bblanchon/ArduinoJson) for parsing json response from http://openweathermap.org/
 * [Adafruit_CharacterOLED](https://github.com/ladyada/Adafruit_CharacterOLED) Arduino for the 16x2 Display, I fixed some imports
 
-
+Remarks
+----------------
+* The display [Monochrome 128x32 SPI OLED](http://www.adafruit.com/products/661) might be a better joice, as it gives more flexibility for drawing, uses less wires and is much cheaper. 
 
 Additional Resources
 ----------------
