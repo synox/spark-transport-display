@@ -9,12 +9,12 @@ monitor:
 
 update-dependencies:
 	git clone https://github.com/bblanchon/ArduinoJson.git tmp/ArduinoJson
-	cp -v tmp/ArduinoJson/JsonParser/*.cpp .
-	cp -v tmp/ArduinoJson/JsonParser/*.h .
+	cp -v tmp/ArduinoJson/JsonParser/*.cpp lib/
+	cp -v tmp/ArduinoJson/JsonParser/*.h lib/
 	rm -rf tmp/ArduinoJson
 	
 	git clone https://github.com/nmattisson/HttpClient.git tmp/HttpClient
-	cp -v tmp/HttpClient/firmware/{*.cpp,*.h} .
+	cp -v tmp/HttpClient/firmware/{*.cpp,*.h} lib/
 	rm -rf tmp/HttpClient
 
 clean:
