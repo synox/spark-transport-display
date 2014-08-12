@@ -10,15 +10,7 @@ This project is a compilation of different components:
 
 **You can remove, add or extract any of the components and create your own project. Share your mix if you like.**
 
-### Hardware
-The required hardware is:
-
- *  Spark Core (https://www.spark.io/)
- *  16x2 OLED Display (http://www.adafruit.com/products/823)
- *  Some wires from ebay
- 
-The display
-===
+### Display
 
 ![image](doc/display.png)
 
@@ -26,19 +18,28 @@ The colored LED shows when it is the right time to leave and catch a bus. (Green
 
 The display shows the time, weather, temperature and next bus departures. The position are configurable in the code. 
 
-## Circuit Diagram
+
+### Hardware
+The required hardware is:
+
+ *  Spark Core (https://www.spark.io/)
+ *  16x2 OLED Display (http://www.adafruit.com/products/823)
+ *  Some wires
+ 
+
+### Circuit Diagram
 Putting it together is quite simple: 
 
 ![image](doc/Steckplatine.png)
 
-circuit layout:
+Circuit layout:
 
 ![image](doc/Schaltplan.png)
 
-in action: 
+In action: 
 ![image](doc/wires.jpg)
 
-## Getting started
+## Getting started with the firmware
 You have to change some settings in [application.ino](firmware/application.ino), in the method ``setup``. 
 
 First, you have to change some location and API-Key information in the method ``setup``: 
@@ -59,7 +60,7 @@ Set your station and adjust the URL (from, to):
 
 
 
-## Build and deploy
+### Build and deploy
 You must install [spark-cli](https://github.com/spark/spark-cli). 
 
 
