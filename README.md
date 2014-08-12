@@ -4,14 +4,18 @@ This software enables you to display the weather, current time and the bus' next
 
 This project is a compilation of different components: 
 
- * Weather from http://openweathermap.org/ (see [synox/openweathermap-spark-lib](https://github.com/synox/openweathermap-spark-lib) for more details)
- * Swiss Traffic Information from http://transport.opendata.ch/ (running a modified version at http://opentt.herokuapp.com/)
- * Time (provided by Spark Core firmware)
+ * Weather from http://openweathermap.org/ (see [the weather documentation](doc/weather.md) for more details)
+ * Swiss Traffic Information from http://transport.opendata.ch (running a modified version at http://opentt.herokuapp.com)
+ * Time (included in the Spark Core firmware)
 
+**You can remove, add or extract any of the components and create your own project. Share your mix if you like.**
+
+### Hardware
 The required hardware is:
+
  *  Spark Core (https://www.spark.io/)
  *  16x2 OLED Display (http://www.adafruit.com/products/823)
- *  Some wires
+ *  Some wires from ebay
  
 The display
 ===
