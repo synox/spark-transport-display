@@ -36,9 +36,7 @@ Circuit layout:
 
 ![image](doc/Schaltplan.png)
 
-In action: 
-
-![image](doc/wires.jpg)
+See also the photos of my wiring [first](doc/wires1.jpg) and [second compact version](doc/wires_compact.jpg).
 
 ## Getting started with the firmware
 You have to change some settings in [application.ino](firmware/application.ino), in the method ``setup``. 
