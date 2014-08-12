@@ -19,3 +19,4 @@ update-dependencies:
 
 clean:
 	rm firmware_*.bin
+	rmdir tmp
