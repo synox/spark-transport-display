@@ -4,6 +4,9 @@ all: compile
 flash:
 	spark  cloud flash 50ff68065067545627390287 .
 
+flash_usb: compile
+	spark flash 50ff68065067545627390287 --usb $$(ls -t1 firmware_*.bin | head -1)
+
 compile: clean
 	spark compile .
 
@@ -22,4 +25,4 @@ update-dependencies:
 
 clean:
 	rm -f firmware_*.bin
-	test -d tmp && rmdir tmp
+	test -d tmp && rmdir tmp || true
