@@ -81,7 +81,7 @@ void loop() {
 
 		// print weather in first row after the time
 		lcd->setCursor(0, 1); 
-		lcd->print("loading...");
+		lcd->print("get weather...");
 		weather_response_t resp = weather->cachedUpdate();
 		if ( resp.isSuccess) {
 			lcd->setCursor(6, 0); 

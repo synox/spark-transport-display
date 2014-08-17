@@ -94,7 +94,7 @@ void Transport::loadConnections(unsigned long now) {
 	if (getCacheSize() < 2 )  {
 		if(lcd != NULL) {
 			lcd->setCursor(0,1);
-			lcd->print("updating data...");
+			lcd->print("get transport...");
 		}
 
 		Serial.println("loading connections...");
