@@ -49,15 +49,17 @@ unsigned long connections[CONNECTION_CACHE_SIZE];
 
 
 
-void Transport::init (Adafruit_CharacterOLED *lcd, const char* query, HttpClient* client) {
+void Transport::init (Adafruit_CharacterOLED *lcd, String from, String to, HttpClient* client) {
+	// /v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6
     this->lcd = lcd;
     // init connection array
 	for (int i = 0; i < CONNECTION_CACHE_SIZE; i++) {
 		connections[i] = 0;
 	}
+	String query ="/v1/connections?from=";
+	query +=from + "&to=" + to +"&fields[]=connections/from/departure&limit=6"; 
 	this->query = query;
-	 httpClient = client;
-
+	httpClient = client;
 }
 
 

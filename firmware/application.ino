@@ -50,9 +50,7 @@ void setup() {
     weather = new Weather("Bern,ch", httpClient, "ae22162b86e9ea6298b8dc79d2330691");
 
 	// setup transport api
-	transport.init(lcd, 
-			"/v1/connections?from=Wabern,Gurtenbahn&to=Bern&fields[]=connections/from/departure&limit=6",
-			httpClient);
+	transport.init(lcd, "Wabern,Gurtenbahn", 	"Bern", 	httpClient);
 
 }
 

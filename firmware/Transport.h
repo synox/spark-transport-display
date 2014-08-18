@@ -14,7 +14,7 @@ enum Status {
 
 class Transport {
     public:
-    void init(Adafruit_CharacterOLED *lcd, const char* query, HttpClient* client);
+    void init(Adafruit_CharacterOLED *lcd, String from, String to, HttpClient* client);
     void cleanupCache(unsigned long now);
     unsigned int getCacheSize();
     void loadConnections(unsigned long now);
@@ -23,7 +23,7 @@ class Transport {
     void displayDepartures(const int rowLength, const int rowCount);
     
     private: 
-    const char* query;
+    String query;
     Adafruit_CharacterOLED *lcd;
 	HttpClient* httpClient;
 
