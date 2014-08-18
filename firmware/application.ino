@@ -77,9 +77,7 @@ void loop() {
 		displayCurrentTime(0, 0);
 		transport.displayDepartures(16, 2); // 16x2 Display
 
-		// print weather in first row after the time
-		lcd->setCursor(0, 1); 
-		lcd->print("get weather...");
+		// print temperature in first row after the time
 		weather_response_t resp = weather->cachedUpdate();
 		if ( resp.isSuccess) {
 			lcd->setCursor(6, 0); 

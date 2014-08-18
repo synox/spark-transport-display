@@ -57,7 +57,7 @@ void Transport::init (Adafruit_CharacterOLED *lcd, String from, String to, HttpC
 		connections[i] = 0;
 	}
 	String query ="/v1/connections?from=";
-	query +=from + "&to=" + to +"&fields[]=connections/from/departure&limit=6"; 
+	query +=from + "&to=" + to +"&fields[]=connections/from/departureTimestamp&limit=6"; 
 	this->query = query;
 	httpClient = client;
 }
@@ -94,24 +94,19 @@ unsigned int Transport::getCacheSize() {
 void Transport::loadConnections(unsigned long now) {
     cleanupCache( now);
 	if (getCacheSize() < 2 )  {
-		if(lcd != NULL) {
-			lcd->setCursor(0,1);
-			lcd->print("get transport...");
-		}
-
-		Serial.println("loading connections...");
+		Serial.println("loading connections");
         // refresh connections
 		http_request_t request;
 		request.path = this->query;
 		request.body = "";
-		request.hostname = "opentt.herokuapp.com";
+		request.hostname = "transport.opendata.ch";
 		request.port = 80;
 
 		http_response_t response;
 		httpClient->get(request, response);
 
 		if(response.status == 200) {
-			Serial.println("Loaded data successfully: ");
+			Serial.println("Loaded transport data successfully: ");
 			Serial.println(response.body);
 			parseFahrplan(response.body);
 		} else {
@@ -127,7 +122,7 @@ void Transport::loadConnections(unsigned long now) {
 void Transport::parseFahrplan(String jsonData) {
 	int offset = 0;
 	do {
-		offset = jsonData.indexOf("departure\":", offset);
+		offset = jsonData.indexOf("departureTimestamp\":", offset);
 		if(TRANSPORT_DEBUG) Serial.print("offset: ");
 		if(TRANSPORT_DEBUG) Serial.println(offset);
 
@@ -135,7 +130,7 @@ void Transport::parseFahrplan(String jsonData) {
 			break;
 		}
 		//
-		offset += 11; // move to timestamp
+		offset += 20; // move to timestamp
 		String timestamp = jsonData.substring(offset, offset + 10); // timestamp has length 10
 		if(TRANSPORT_DEBUG) Serial.print("ts: ");
 		if(TRANSPORT_DEBUG) Serial.println(timestamp);
