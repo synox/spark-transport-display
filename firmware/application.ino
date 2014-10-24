@@ -68,24 +68,31 @@ void loop() {
 
 
 	if (lcd != NULL) {
-	// Display design: (16x2 char)
+	// Display layout: (16x2 char)
 	// +----------------+
 	// |14:15 15/22`  5m|
 	// |mod rain     12m|
 	// +----------------+
 		lcd->clear();
 		displayCurrentTime(0, 0);
-		transport.displayDepartures(16, 2); // 16x2 Display
 
-		// print temperature in first row after the time
+		// Transport
+		if(!transport.displayDepartures(16, 2)) { // 16x2 Display
+			lcd->setCursor(16-3,0); //
+			lcd->print("---");
+		}
+
+
+		// Weather
 		weather_response_t resp = weather->cachedUpdate();
 		if ( resp.isSuccess) {
+			// print temperature in first row after the time
 			lcd->setCursor(6, 0); 
 			lcd->print(resp.temp_low);
 			lcd->print("/");
 			lcd->print(resp.temp_high);
 			lcd->write(byte(degreeSignKey));
-			// print descr on new line
+			// print descr on second line
 			lcd->setCursor(0, 1);
 			int iconCode = getConditionIcon(resp.conditionCode);
 			if(iconCode >= 0) {
@@ -94,9 +101,10 @@ void loop() {
 				lcd->write(byte(iconCode));
 			}
 			lcd->print(shortDescr(resp.descr).substring(0,12));
+		} else {
+			lcd->setCursor(0, 1);
+			lcd->print("---");
 		}
-
-
 	}
 
 
