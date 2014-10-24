@@ -17,6 +17,7 @@ typedef struct weather_response_t {
 	String descr;
 	long conditionCode; // see http://openweathermap.org/wiki/API/Weather_Condition_Codes
 	bool isSuccess;
+	bool cached;
 	// defaults:
 	weather_response_t(): temp_high(255), temp_low(255), conditionCode(-1), isSuccess(false) {};
 } weather_response_t;

@@ -29,12 +29,16 @@ Weather::Weather(String location, HttpClient* client, String apiKey) {
 weather_response_t Weather::cachedUpdate() {
 	if (lastsync == 0 || (lastsync + weather_sync_interval) < millis()) {
 		weather_response_t resp;
-		if(this->update(resp)){
-			lastReponse = resp;	
+		lastReponse = resp;	
+		lastReponse.isSuccess = false;
+		if(this->update(lastReponse)){
 			lastsync = millis();
+		} else {
+
 		}
 	} else {
 		Serial.println("using cached weather");
+		lastReponse.cached = true;
 	}
 	return lastReponse;
 }
