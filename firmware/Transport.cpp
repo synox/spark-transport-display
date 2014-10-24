@@ -206,9 +206,13 @@ Status Transport::calculateStatus(unsigned long now) {
 
 
 /** print departure time right aligned. e.g.     23m */
-void Transport::displayDepartures(const int rowLength, const int rowCount) {
+bool Transport::displayDepartures(const int rowLength, const int rowCount) {
 	unsigned long now = Time.now();
 	int row = 0;
+
+	if(rowCount == 0) {
+		return false;
+	}
 
 	for (int i = 0; i < CONNECTION_CACHE_SIZE && row < rowCount; i++) {
 		long diffSecs = connections[i] - now;
@@ -229,6 +233,7 @@ void Transport::displayDepartures(const int rowLength, const int rowCount) {
 			row++;
 		}
 	}
+	return true;
 }
 
 

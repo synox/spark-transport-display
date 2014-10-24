@@ -20,7 +20,7 @@ class Transport {
     void loadConnections(unsigned long now);
     void printCache();
     void updateLed(unsigned long now);
-    void displayDepartures(const int rowLength, const int rowCount);
+    bool displayDepartures(const int rowLength, const int rowCount);
     
     private: 
     String query;
