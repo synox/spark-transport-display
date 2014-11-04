@@ -99,6 +99,8 @@ void Transport::loadConnections(unsigned long now) {
 		http_request_t request;
 		request.path = this->query;
 		request.body = "";
+		request.forceIp = true;
+		request.ip = IPAddress(178,209,54,56);
 		request.hostname = "transport.opendata.ch";
 		request.port = 80;
 

@@ -45,6 +45,8 @@ weather_response_t Weather::cachedUpdate() {
 
 
 bool Weather::update(weather_response_t& response) {
+	request.forceIp = true;
+	request.ip = IPAddress(188, 226, 224, 148);
 	request.hostname = "api.openweathermap.org";
 	request.port = 80;
 	request.path = "/data/2.5/forecast/daily?q=" //
