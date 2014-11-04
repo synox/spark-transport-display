@@ -29,7 +29,7 @@ Weather* weather;
 HttpClient* httpClient;
 
 void setup() {
-	Time.zone(+2.0); // DST / Sommerzeit // TODO: detect DST 
+	Time.zone(+1.0); // +1.0/+2.0 Winer / Sommerzeit // TODO: detect DST 
 	Serial.begin(9600);
 	pinMode(activityLed, OUTPUT);
 
