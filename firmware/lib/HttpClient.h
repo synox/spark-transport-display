@@ -32,6 +32,7 @@ typedef struct
  */
 typedef struct
 {
+  bool forceIp;
   String hostname;
   IPAddress ip;
   String path;
