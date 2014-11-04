@@ -75,7 +75,7 @@ You can also configure and use the `Makefile`.
 
 Remarks
 ----------------
-* The display [Monochrome 128x32 SPI OLED](http://www.adafruit.com/products/661) might be a better joice, as it gives more flexibility for drawing, uses less wires and is much cheaper. 
+* The display [Monochrome 128x32 SPI OLED](http://www.adafruit.com/products/661) might be a better choice, as it gives more flexibility for drawing, uses less wires and is much cheaper. 
 * Daylight Saving Time ("Sommerzeit") is currently not detected automatically. 
 
 Additional Resources
