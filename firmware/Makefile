@@ -25,6 +25,8 @@ update-dependencies: clean
 	cp -v tmp/HttpClient/firmware/{*.cpp,*.h} lib/
 	rm -r tmp/HttpClient
 
+	// https://github.com/ladyada/Adafruit_CharacterOLED
+
 
 clean:
 	rm -f firmware_*.bin
