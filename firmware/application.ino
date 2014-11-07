@@ -36,10 +36,7 @@ void setup() {
 	// use one httpClient for weather and transportation (save memory)
 	httpClient = new HttpClient();
 
-	// setup led
-	RGB.control(true);
-	RGB.brightness(100);
-
+	
 	// setup lcd                              rs, rw, enable, d4, d5, d6, d7
 	lcd = new Adafruit_CharacterOLED(OLED_V1, D0, D1, D2,     D3, D4, D5, D6);
 	lcd->createChar(degreeSignKey, degreeSignArray);
@@ -55,6 +52,11 @@ void setup() {
 }
 
 void loop() {
+	// setup led
+	RGB.control(true);
+	RGB.brightness(100);
+
+
 	if (updateTimeout > millis()) {
 		// keep the same text & color while waiting
 		return;
