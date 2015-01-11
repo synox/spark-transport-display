@@ -6,26 +6,25 @@ Transport.h
 openweathermap.cpp
 openweathermap.h
 
-lib/Adafruit_CharacterOLED.cpp
-lib/Adafruit_CharacterOLED.h
+Adafruit_CharacterOLED.cpp
+Adafruit_CharacterOLED.h
 
-lib/HttpClient.cpp
-lib/HttpClient.h
+HttpClient.cpp
+HttpClient.h
 
-lib/JsonArray.cpp
-lib/JsonArray.h
-lib/JsonArrayIterator.h
-lib/JsonObject.cpp
-lib/JsonObject.h
-lib/JsonObjectIterator.h
-lib/JsonPair.h
-lib/JsonParser.h
-lib/JsonParserBase.cpp
-lib/JsonParserBase.h
-lib/JsonToken.cpp
-lib/JsonToken.h
-lib/JsonValue.cpp
-lib/JsonValue.h
-lib/jsmn.cpp
-lib/jsmn.h
-
+JsonArray.cpp
+JsonArray.h
+JsonArrayIterator.h
+JsonObject.cpp
+JsonObject.h
+JsonObjectIterator.h
+JsonPair.h
+JsonParser.h
+JsonParserBase.cpp
+JsonParserBase.h
+JsonToken.cpp
+JsonToken.h
+JsonValue.cpp
+JsonValue.h
+jsmn.cpp
+jsmn.h
